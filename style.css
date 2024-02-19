@@ -16,8 +16,16 @@ body {
   padding: 20px;
 }
 .dropdown-container {
+<<<<<<< HEAD
   background-color: #f5f5f5;  
 }
+=======
+  background-color: #f5f5f5; 
+ 
+}
+
+
+>>>>>>> 27c50ea (Updated calculator and background)
 h1 {
   color: #333;
   text-align: center;
