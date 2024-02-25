@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Loans</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dropdown-container">
+        <div class="dropdown">
+            <button class="dropbtn">Topics</button>
+            <div class="dropdown-content">
+                <a href="index.html">Fundamentals of Financial Literacy</a>
+                <a href="personal_finance.html">Personal Finance</a>
+                <a href="savings.html">Savings</a>
+                <a href="finance_institutions.html">Financial Institutions</a>
+                <a href="budget.html">Budgeting</a>
+                <a href="credit.html">Credit</a>
+                <a href="debt.html">Debt</a>
+            </div>
+        </div>
+    </div>
+    <!-- Types of Loans Section -->
+    <div class="container">
+        <h1>The Types of Loans</h1>
+        <h2>Student Loans:</h2>
+        <p>The purpose of student loans are designed to help people pay for college expenses, such as tuition, books, and living expenses. Interest rates for a student loan can vary widely depending on factors such as the type of loan (federal or private), the borrower's credit history, and other conditions. Typically, federal student loan interest rates (currently at 5.50%) are usually lower than private student loans. There are two types of federal student loans: one is a subsidized loan, and the other is an unsubsidized loan. Subsidized federal student loans do not accrue interest while you are in school at least half-time or during deferment periods. Unsubsidized federal student loans do accrue interest the moment that they are taken out.</p>
+
+        <h2>Car Loans:</h2>
+        <p>The purpose of car loans are used to finance the purchase of a vehicle. The interest rates for car loans can vary based on factors such as the borrower's credit score, the loan term, and the lender. When considering taking out a car loan, borrowers should consider the total cost of the loan, including interest; extra fees such as insurance payments, maintenance and upkeep for the vehicle; and lastly the loan term and monthly payment amount.</p>
+
+        <h2>Mortgage Loans:</h2>
+        <p>The purpose of mortgage loans are used to finance the purchase of a home or property. The interest rates for a mortgage loan can vary based on factors such as the borrower's credit score, the loan term (e.g., 15-year fixed, 30-year fixed), the type of mortgage (conventional, FHA, VA), and housing market conditions. When considering taking out a mortgage loan, borrowers should consider the down payment amount, closing costs, and the type of mortgage loan that best suits their financial situation.</p>
+
+        <h2>Amortization Schedule:</h2>
+        <p>An amortization schedule is a table that outlines each periodic payment on a loan, breaking down how much of each payment goes towards the principal amount and how much goes towards interest. It helps borrowers understand how their loan balance decreases over time as they make payments.</p>
+        <p>Factors used to calculate amortization include:</p>
+        <ul>
+            <li>Loan amount: The initial amount borrowed.</li>
+            <li>Interest rate: The annual interest rate charged on the loan balance.</li>
+            <li>Repayment period: The length of time over which the loan is repaid (e.g., 5 years, 30 years).</li>
+        </ul>
+    </div>
+    <!-- Mortgage Loan Calculator -->
+    <section id="mortgage-calculator">
+        <h2>Mortgage Calculator</h2>
+        <div id="calculator">
+            <table id="calinputtable" align="left">
+                <tr><td>Loan Amount</td><td align="right"><input type="text" name="cloanamount" size="5" id="cloanamount" value="0" style="text-align: right;width:100px;" onchange="calc()"></td><td>$</td></tr>
+                <tr><td>Loan Term</td><td align="right"><input type="text" name="cloanterm" size="5" id="cloanterm" value="1" style="text-align: right;width:100px;" onchange="calc()"></td><td>years</td></tr>
+                <tr><td>Rate</td><td align="right"><input type="text" name="cinterestrate" size="5" id="cinterestrate" value="0" style="text-align: right;width:100px;" onchange="calc()"></td><td>%</td></tr>
+                <tr><td>Property Tax</td><td align="right"><input type="text" name="cpropertytaxes" size="5" id="cpropertytaxes" value="0" style="text-align: right;width:100px;" onchange="calc()"></td><td>$/year</td></tr>
+                <tr><td>PMI Insurance</td><td align="right"><input type="text" name="cpmi" size="5" id="cpmi" value="0" style="text-align: right;width:100px;" onchange="calc()"></td><td>$/year</td></tr>
+                <tr><td>Other Cost</td><td align="right"><input type="text" name="" size="5" id="cothercost" value="0" style="text-align: right;width:100px;" onchange="calc()"></td><td>$/year</td></tr>
+                <tr><td colspan="3" align="left"><input type="button" value="Calculate" onclick="calc()"></td></tr>
+            </table>
+            <div id="coutput"></div>
+            <div id="resulttable"></div>
+        </div>
+        <script>
+            function calc() {
+                showQuickMsg("calculating...", true);
+                document.getElementById("resulttable").innerHTML = "";
+                setTimeout(process, 2);
+            }
+            function process() {
+                var loanAmount = parseFloat(document.getElementById("cloanamount").value);
+                var loanTerm = parseFloat(document.getElementById("cloanterm").value);
+                var interestRate = parseFloat(document.getElementById("cinterestrate").value);
+                var propertyTaxes = parseFloat(document.getElementById("cpropertytaxes").value);
+                var pmi = parseFloat(document.getElementById("cpmi").value);
+                var otherCosts = parseFloat(document.getElementById("cothercost").value);  
+                if (isNaN(loanAmount) || isNaN(loanTerm) || isNaN(interestRate) || isNaN(propertyTaxes) || isNaN(pmi) || isNaN(otherCosts)) {
+                    showQuickMsg("All inputs must be numeric", true);
+                    return;
+                }
+                if (loanTerm < 1 || loanTerm > 50) {
+                    showQuickMsg("Loan term must be between 1 and 50 years", true);
+                    return;
+                }
+                if (interestRate < -200 || interestRate > 200) {
+                    showQuickMsg("Interest rate must be between -200 and 200%", true);
+                    return;
+                }
+                var monthlyInterestRate = interestRate / 100 / 12;
+                var monthlyPayment;
+                var totalOutPocket;
+                if (monthlyInterestRate === 0) {
+                    monthlyPayment = loanAmount / loanTerm / 12;
+                } else {
+                    monthlyPayment = loanAmount * monthlyInterestRate / (1 - Math.pow(1 + monthlyInterestRate, -loanTerm * 12));
+                }
+                var totalPropertyTaxes = propertyTaxes / 12;
+                var totalPmi = pmi / 12;
+                var totalOtherCosts = otherCosts / 12;
+                totalOutPocket = monthlyPayment + totalPropertyTaxes + totalPmi + totalOtherCosts;  
+                var totalPayments = monthlyPayment * loanTerm * 12;
+                var totalInterest = totalPayments - loanAmount;
+
+                var resultTableHTML = "<table cellpadding='3' width='100%'>";
+                resultTableHTML += "<tr bgcolor='#f5f5f5'><td><b>Monthly Pay</b></td><td align=right>" + formatAsMoney(monthlyPayment) + "</td></tr>";
+                resultTableHTML += "<tr><td>Monthly Property Tax</td><td align=right>" + formatAsMoney(totalPropertyTaxes) + "</td></tr>";
+                resultTableHTML += "<tr><td>Monthly PMI (Private Mortgage Insurance)</td><td align=right>" + formatAsMoney(totalPmi) + "</td></tr>";
+                resultTableHTML += "<tr><td>Monthly Other Costs</td><td align=right>" + formatAsMoney(totalOtherCosts) + "</td></tr>";
+                resultTableHTML += "<tr bgcolor='#f5f5f5'><td><b>Monthly Total Out of Pocket</b></td><td align=right>" + formatAsMoney(totalOutPocket) + "</td></tr>";
+                resultTableHTML += "<tr><td>Total of " + (loanTerm * 12).toFixed(2) + " Monthly Payments</td><td align=right>" + formatAsMoney(totalPayments) + "</td></tr>";
+                resultTableHTML += "<tr><td>Total Interest Paid</td><td align=right>" + formatAsMoney(totalInterest) + "</td></tr>";
+                resultTableHTML += "</table>";
+
+                showQuickMsg(resultTableHTML, false);
+            }
+
+            function showQuickMsg(msg, isError) {
+                var outputDiv = document.getElementById("coutput");
+                outputDiv.innerHTML = isError ? "<font color=red>" + msg + "</font>" : msg;
+            }
+
+            function formatAsMoney(amount) {
+                return "$" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+
+            calc(); // Initial calculation
+        </script>
+    </section>  
+</body>
+</html>
