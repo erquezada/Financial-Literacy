@@ -182,19 +182,25 @@
             const monthlyInterest = balance * monthlyInterestRate;
             const newBalance = balance + monthlyInterest - monthlyPayment;
 
-            outputDiv.innerHTML = "Remaining balance after payment: $" + newBalance.toFixed(2);
-
-            if (newBalance <= 0) {
-                resultTableDiv.innerHTML = "Congratulations! You have paid off your credit card.";
-                payoffDateDiv.innerHTML = ""; // Clear estimated payoff date if balance is paid off
-            } else {
-                resultTableDiv.innerHTML = "";
-                // Calculate and display estimated payoff date
-                const currentDate = new Date();
-                const monthsToPayoff = Math.ceil(newBalance / monthlyPayment);
-                const payoffDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + monthsToPayoff, currentDate.getDate());
-                payoffDateDiv.innerHTML = "Estimated payoff date: " + payoffDate.toDateString();
+        if (newBalance <= 0) {
+            resultTableDiv.innerHTML = "Congratulations! You have paid off your credit card.";
+            payoffDateDiv.innerHTML = ""; // Clear estimated payoff date if balance is paid off
+        } else {
+            resultTableDiv.innerHTML = "";
+            // Calculate and display estimated payoff time in years and months
+            const currentDate = new Date();
+            const monthsToPayoff = Math.ceil(newBalance / monthlyPayment);
+            const years = Math.floor(monthsToPayoff / 12);
+            const months = monthsToPayoff % 12;
+            let payoffTime = "";
+            if (years > 0) {
+                payoffTime += years + (years === 1 ? " year" : " years");
             }
+            if (months > 0) {
+                payoffTime += (years > 0 ? " and " : "") + months + (months === 1 ? " month" : " months");
+            }
+            payoffDateDiv.innerHTML = "Estimated payoff time: " + payoffTime;
+        }
         });
     });
 </script>
