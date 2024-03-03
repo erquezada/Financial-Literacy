@@ -187,7 +187,8 @@ document.addEventListener("DOMContentLoaded", function() {
             resultTableDiv.innerHTML = "Please enter valid numbers.";
             payoffDateDiv.innerHTML = "";
         } else {
-            resultTableDiv.innerHTML = "Remaining Balance: $" + balance.toFixed(2);
+            const totalPaid = monthlyPayment * T;
+            resultTableDiv.innerHTML = "<br>Total Paid: $" + totalPaid.toFixed(2);
             payoffDateDiv.innerHTML = "Estimated payoff time: " + (years > 0 ? years + " years and " : "") + months + " months";
         }
     });
