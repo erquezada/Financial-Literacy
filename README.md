@@ -1,4 +1,4 @@
-]# Fundamentals of Financial Literacy: A Guide to Making Informed Decisions
+# Fundamentals of Financial Literacy: A Guide to Making Informed Decisions
 
 Welcome to our platform dedicated to enhancing your financial literacy and empowering you to make informed decisions about your money. Whether you're just starting your journey to financial wellness or seeking to deepen your understanding of personal finance, we're here to provide you with valuable resources and insights.
 
