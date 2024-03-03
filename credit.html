@@ -167,42 +167,31 @@
     </div>
 </section>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const form = document.getElementById("credit-card-form");
-        const outputDiv = document.getElementById("coutput");
-        const resultTableDiv = document.getElementById("resulttable");
-        const payoffDateDiv = document.getElementById("payoff-date"); // Get the new div for estimated payoff date
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("credit-card-form");
+    const outputDiv = document.getElementById("coutput");
+    const resultTableDiv = document.getElementById("resulttable");
+    const payoffDateDiv = document.getElementById("payoff-date");
 
-        form.addEventListener("input", function() {
-            const balance = parseFloat(document.getElementById("cbalance").value);
-            const annualInterestRate = parseFloat(document.getElementById("cpercentagerate").value);
-            const monthlyPayment = parseFloat(document.getElementById("cmonthlypaymentamount").value);
+    form.addEventListener("input", function() {
+        const balance = parseFloat(document.getElementById("cbalance").value);
+        const annualInterestRate = parseFloat(document.getElementById("cpercentagerate").value) / 100;
+        const monthlyPayment = parseFloat(document.getElementById("cmonthlypaymentamount").value);
 
-            const monthlyInterestRate = annualInterestRate / 12 / 100;
-            const monthlyInterest = balance * monthlyInterestRate;
-            const newBalance = balance + monthlyInterest - monthlyPayment;
+        const monthlyInterestRate = annualInterestRate / 12;
+        const T = -Math.log(1 - (balance * monthlyInterestRate) / monthlyPayment) / Math.log(1 + monthlyInterestRate);
+        const years = Math.floor(T / 12);
+        const months = Math.ceil(T % 12);
 
-        if (newBalance <= 0) {
-            resultTableDiv.innerHTML = "Congratulations! You have paid off your credit card.";
-            payoffDateDiv.innerHTML = ""; // Clear estimated payoff date if balance is paid off
+        if (isNaN(T) || T < 0 || !isFinite(T)) {
+            resultTableDiv.innerHTML = "Please enter valid numbers.";
+            payoffDateDiv.innerHTML = "";
         } else {
-            resultTableDiv.innerHTML = "";
-            // Calculate and display estimated payoff time in years and months
-            const currentDate = new Date();
-            const monthsToPayoff = Math.ceil(newBalance / monthlyPayment);
-            const years = Math.floor(monthsToPayoff / 12);
-            const months = monthsToPayoff % 12;
-            let payoffTime = "";
-            if (years > 0) {
-                payoffTime += years + (years === 1 ? " year" : " years");
-            }
-            if (months > 0) {
-                payoffTime += (years > 0 ? " and " : "") + months + (months === 1 ? " month" : " months");
-            }
-            payoffDateDiv.innerHTML = "Estimated payoff time: " + payoffTime;
+            resultTableDiv.innerHTML = "Remaining Balance: $" + balance.toFixed(2);
+            payoffDateDiv.innerHTML = "Estimated payoff time: " + (years > 0 ? years + " years and " : "") + months + " months";
         }
-        });
     });
+});
 </script>
 </body>
 </html>
