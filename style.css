@@ -13,7 +13,10 @@ body {
   padding: 20px;
   background-color: #fff; /* white */
 }
-
+.container img {
+  display: block;
+  margin: 0 auto;
+}
 .dropdown-container {
   background-color: #f5f5f5; 
   position: relative; /* Change to relative */
